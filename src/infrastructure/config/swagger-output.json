@@ -1,0 +1,209 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "v1.0.0",
+    "title": "Swagger Tech Challenge",
+    "description": "Tech Challenge API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {    
+    "/campaign/all": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "description": "Get all campaigns",
+        "responses": {
+          "200": {
+            "description": "Return all campaigns",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Campaign"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Campaign"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaign/{Id}": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/campaign/create": {
+      "post": {
+        "tags": [
+          "Campaign"
+        ],
+        "description": "Create a new campaign",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Campaign"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaign/customer/association/create": {
+      "post": {
+        "tags": [
+          "Campaign"
+        ],
+        "description": "Create a new campaign Customer association",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddCampaignCustomer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaign/update/{id}": {
+      "put": {
+        "tags": [
+          "Campaign"
+        ],
+        "description": "Update campaign by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Campaign"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/campaign/{id}/customers": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }    
+  },
+  "components": {
+    "schemas": {      
+      "Campaign": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Campaign Name"
+          },
+          "campaignRule": {
+            "type": "string",
+            "example": "Campaign Rule"
+          },
+          "discount": {
+            "type": "string",
+            "example": "10"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "2021-10-20"
+          }
+        },
+        "xml": {
+          "name": "Campaign"
+        }
+      },      
+      "AddCampaignCustomer": {
+        "type": "object",
+        "properties": {
+          "campaignId": {
+            "type": "number",
+            "example": 1
+          },
+          "customerId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "xml": {
+          "name": "AddCampaignCustomer"
+        }
+      }
+    }
+  }
+}
