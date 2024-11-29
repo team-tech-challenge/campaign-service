@@ -5,11 +5,9 @@ import connection from "@config/connectionFactory";
 
 const server = new http.Server(express());
 const port = Number(process.env.PORT);
-const host = Number(process.env.HOST);
-
 
 connection.database.sync().then(() => {
-	server.listen(port, host, () => {
+	server.listen(port, () => {
 		console.log(`Server running on ${port}`);
 		newman();
 	});
