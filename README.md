@@ -30,7 +30,7 @@ O Microserviço de Campaign é responsável por gerenciar todas as operações r
 
 	src
 	├── application
-	│   ├── adpters
+	│   ├── adapters
 	│   ├── controllers
 	│   ├── usecases
 	│   └── utils
