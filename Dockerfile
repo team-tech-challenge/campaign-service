@@ -5,7 +5,7 @@ FROM node:19-alpine as build
 WORKDIR /app
 
 # Copia os arquivos de dependência primeiro para utilizar caching
-COPY docker .
+COPY . .
 
 COPY package.json .
 
