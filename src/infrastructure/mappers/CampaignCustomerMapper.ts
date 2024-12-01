@@ -1,5 +1,4 @@
 import { CampaignCustomer } from "@entities/CampaignCustomer";
-import { CustomerMapper } from "./CustomerMapper";
 
 export class CampaignCustomerMapper {
   static toEntity(campaignCustomerModel: any): CampaignCustomer {
