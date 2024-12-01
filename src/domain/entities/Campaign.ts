@@ -1,12 +1,9 @@
-import { Customer } from "./Customer";
-
 export class Campaign {
 	private id?: number;
 	private name: string;
 	private endDate: Date;
 	private campaignRule: string;
-	private discount: number;
-	private customers: Customer[];
+	private discount: number;	
 
 	constructor(name: string, endDate: Date, campaignRule: string, discount: number, id?: number) {
 		this.id = id;
@@ -36,10 +33,6 @@ export class Campaign {
 		return this.discount;
 	}
 
-	getCustomers(): Customer[] {
-		return this.customers;
-	}
-
 	public setId(id: number): void {		
 		this.id = id;
 	}
@@ -53,7 +46,4 @@ export class Campaign {
 		this.discount = discount;
 	}
 	
-	addCustomer(customer: Customer): void {
-		this.customers.push(customer);
-	}	
 }

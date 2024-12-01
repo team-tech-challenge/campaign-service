@@ -22,7 +22,7 @@ export class CampaignUseCase {
 		const campaign = await this.campaignGateway.getCampaignById(data.campaignId);
 		if (!campaign)	throw new Error('Campaign not found');
 
-		const customerCampaign = await this.campaignGateway.customersOfCampaign(data.campaignId, data.customerId);
+		const customerCampaign = await this.campaignGateway.getCustomersOfCampaign(data.campaignId, data.customerId);
 		
 		if (customerCampaign && customerCampaign.length > 0)	throw new Error('Customer already registered in the campaign.');
 
@@ -36,13 +36,24 @@ export class CampaignUseCase {
 		await this.campaignGateway.updateCampaign(id, data);
 	}
 
-	async getCampaignCustomers(id: number): Promise<CampaignCustomer[]> {
-		const customersCampaign = await this.campaignGateway.customersOfCampaign(id);
+	async getCampaignCustomers(campaignId: number): Promise<{  campaignId: number; customer: any | null }[]> { 
+		
+		const campaignCustomers = await this.campaignGateway.getCustomersOfCampaign(campaignId);
 
-		if (!customersCampaign) {
+		if (!campaignCustomers) {
 			throw new Error('customer not found');
 		}
 	  
-		return customersCampaign;
+		return campaignCustomers;
+	}
+	async getCustomerCampaigns(customerId: number ): Promise<{  customerId: number; campaign: any | null }[]> { 
+		
+		const customerCampaigns = await this.campaignGateway.getCampaignsOfCustomer(customerId);
+
+		if (!customerCampaigns) {
+			throw new Error('customer not found');
+		}
+	  
+		return customerCampaigns;
 	}
 }

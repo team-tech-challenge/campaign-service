@@ -18,7 +18,7 @@ export class CampaignController {
 		try {
 			const campaignId = req.params.Id;
 			const campaign = await this.campaignUseCase.getCampaignById(campaignId);
-			defaultReturnStatement(res, "Campaign", campaign);
+			res.json(campaign);
 		} catch (err) {
 			console.error(err);
 			res.status(400).json({ error: err.message });
@@ -57,9 +57,29 @@ export class CampaignController {
 
 	async getCampaignCustomers(req, res) {
 		try {
-			const campaignId = req.params.id;
-			const customers = await this.campaignUseCase.getCampaignCustomers(campaignId);			
+			const { idCampaign } = req.params;
+			
+			if (!idCampaign) {
+				return res.status(400).json({ error: "idCampaign is required" });
+			}
+
+			const customers = await this.campaignUseCase.getCampaignCustomers(idCampaign);			
 			res.json(customers);
+		} catch (err) {
+			console.error(err);
+			res.status(400).json({ error: err.message.message });
+		}
+	}
+	async getCustomerCampaigns(req, res) {
+		try {
+			const {idCustomer } = req.params;
+			
+			if (!idCustomer) {
+				return res.status(400).json({ error: "idCustomer is required" });
+			}
+
+			const campaigns = await this.campaignUseCase.getCustomerCampaigns(idCustomer);			
+			res.json(campaigns);
 		} catch (err) {
 			console.error(err);
 			res.status(400).json({ error: err.message.message });

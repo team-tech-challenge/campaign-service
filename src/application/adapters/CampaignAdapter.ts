@@ -5,6 +5,7 @@ import { Campaign } from "@entities/Campaign";
 import { CampaignCustomer } from "@entities/CampaignCustomer";
 import { CampaignMapper } from "@mappers/CampaignMapper";
 import { CampaignCustomerMapper } from "@mappers/CampaignCustomerMapper";
+import { searchCustomer } from "src/infrastructure/external/database/api/Customer";
 
 export class CampaignAdapter implements ICampaignGateway {
 	async allCampaigns(): Promise<Campaign[]> {		
@@ -52,17 +53,59 @@ export class CampaignAdapter implements ICampaignGateway {
 		
 	}
 
-	async customersOfCampaign(campaignId: number, customerId?: number): Promise<CampaignCustomer[]> {
+	async getCustomersOfCampaign(campaignId: number, customerId?: number): Promise<{ campaignId: number; customer: any | null }[]> {
 		const whereCondition: any = { campaignId };
 		if (customerId) {
 			whereCondition.customerId = customerId;
 		}
 		const customerCampaign = await CampaignCustomerModel.findAll({
-			where: whereCondition,			
-			order: [['id', 'DESC']],
+			where: whereCondition,		
 		});
 
-		return customerCampaign.map((customerCampaignRecord) => CampaignCustomerMapper.toEntity(customerCampaignRecord));	
-	
+		const customerDetails = await Promise.all(
+			customerCampaign.map(async (customerCampaignRecord) => {
+				let customerData = {};
+				try {
+					customerData = await searchCustomer(customerCampaignRecord.customerId);					
+				} catch (error) {
+					console.error(`Error fetching customer with ID ${customerCampaignRecord.customerId}:`, error.message);
+				}
+
+				// Mapeia os dados para o formato desejado
+				return {
+					campaignId: customerCampaignRecord.campaignId,
+					customer: customerData || null,
+				};
+			})
+		);
+
+		return customerDetails;
 	}
+	async getCampaignsOfCustomer(customerId: number): Promise<{ customerId: number; campaign: any | null }[]> {
+		const whereCondition: any = { customerId };
+		
+		const customerCampaign = await CampaignCustomerModel.findAll({
+			where: whereCondition,		
+		});
+
+		const campaignDetails = await Promise.all(
+			customerCampaign.map(async (campaignRecord) => {
+				let campaignData = {};
+				try {
+					campaignData = await this.getCampaignById(campaignRecord.campaignId);					
+				} catch (error) {
+					console.error(`Error fetching campaign with ID ${campaignRecord.campaignId}:`, error.message);
+				}
+
+				// Mapeia os dados para o formato desejado
+				return {
+					customerId: campaignRecord.customerId,
+					campaign: campaignData || null,
+				};
+			})
+		);
+
+		return campaignDetails;
+	}
+	
 }

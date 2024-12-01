@@ -69,7 +69,27 @@ campaignRoute.put("/update/:id", (req, res) => {
 	campaignController.updateCampaign(req, res);
 });
 
-campaignRoute.get("/:id/customers", (req, res) => {
+campaignRoute.get("/:idCampaign/customers", (req, res) => {
 	// #swagger.tags = ['Campaign']
+	/*  swagger.parameters:
+	*       - in: path
+	*         name: idCampaign
+	*         required: true
+	*         description: ID of the campaign
+	*         schema:
+	*           type: integer    
+	* */
 	campaignController.getCampaignCustomers(req, res);
+});
+campaignRoute.get("/customer/:idCustomer", (req, res) => {
+	// #swagger.tags = ['Campaign']
+	/*  swagger.parameters:
+	*       - in: path
+	*         name: idCampaign
+	*         required: true
+	*         description: ID of the campaign
+	*         schema:
+	*           type: integer       
+	* */
+	campaignController.getCustomerCampaigns(req, res);
 });

@@ -2,9 +2,11 @@ import { CampaignCustomer } from "@entities/CampaignCustomer";
 import { CustomerMapper } from "./CustomerMapper";
 
 export class CampaignCustomerMapper {
-  static toEntity(campaignCustomer: any): CampaignCustomer {
-    const customer = campaignCustomer.customer ? CustomerMapper.toEntity(campaignCustomer.customer) : null; // Verifica se o produto está presente
-    return new CampaignCustomer(campaignCustomer.campaignId, campaignCustomer.customerId, customer);
+  static toEntity(campaignCustomerModel: any): CampaignCustomer {
+    return new CampaignCustomer(
+      campaignCustomerModel.campaignId,
+      campaignCustomerModel.customerId,      
+    );
   }
 
   static toModel(campaignCustomer: CampaignCustomer): any {
@@ -14,3 +16,4 @@ export class CampaignCustomerMapper {
     };
   }
 }
+

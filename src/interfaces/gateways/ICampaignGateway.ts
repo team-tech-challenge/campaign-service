@@ -12,5 +12,7 @@ export interface ICampaignGateway {
 
 	updateCampaign(id: number, campaign: Campaign): Promise<void>;
 
-	customersOfCampaign(campaignId: number, customerId?: number): Promise<CampaignCustomer[]>;
+	getCustomersOfCampaign(campaignId: number, customerId?: number): Promise<{  campaignId: number; customer: any | null }[]>;
+	
+	getCampaignsOfCustomer(customerId: number): Promise<{  customerId: number; campaign: any | null }[]>;
 }

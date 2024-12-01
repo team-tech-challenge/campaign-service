@@ -4,7 +4,7 @@ export class CampaignCustomer {
     private campaignId: number;
     private customerId: number;    
 
-    constructor(campaignId: number, customerId: number, customer: Customer | null) {
+    constructor(campaignId: number, customerId: number) {
         this.campaignId = campaignId;
         this.customerId = customerId;       
     }
