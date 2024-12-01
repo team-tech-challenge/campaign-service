@@ -1,4 +1,4 @@
-module "application" {
+module "campaign-service" {
   source = "./modules/generic"
 
   project_name              = "campaign-service"
