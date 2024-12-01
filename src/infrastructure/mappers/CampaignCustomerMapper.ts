@@ -11,8 +11,8 @@ export class CampaignCustomerMapper {
 
   static toModel(campaignCustomer: CampaignCustomer): any {
     return {
-      comboId: campaignCustomer.getCampaignId(),
-      productId: campaignCustomer.getCustomerId(),
+      campaignId: campaignCustomer.getCampaignId(),
+      customerId: campaignCustomer.getCustomerId(),
     };
   }
 }

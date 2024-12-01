@@ -1,5 +1,3 @@
-import { Customer } from "./Customer";
-
 export class CampaignCustomer {
     private campaignId: number;
     private customerId: number;    
