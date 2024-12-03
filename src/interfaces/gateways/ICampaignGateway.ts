@@ -1,5 +1,4 @@
 import { Campaign } from "@entities/Campaign";
-import { CampaignCustomer } from "@entities/CampaignCustomer";
 
 export interface ICampaignGateway {
 	allCampaigns(): Promise<Campaign[]>;

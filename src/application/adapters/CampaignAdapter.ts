@@ -2,9 +2,7 @@ import { Campaign as CampaignModel } from "@database/CampaignModel";
 import { CampaignCustomer as CampaignCustomerModel } from "@database/CampaignCustomerModel";
 import { ICampaignGateway } from "@gateways/ICampaignGateway";
 import { Campaign } from "@entities/Campaign";
-import { CampaignCustomer } from "@entities/CampaignCustomer";
 import { CampaignMapper } from "@mappers/CampaignMapper";
-import { CampaignCustomerMapper } from "@mappers/CampaignCustomerMapper";
 import { searchCustomer } from "src/infrastructure/external/database/api/Customer";
 
 export class CampaignAdapter implements ICampaignGateway {
@@ -68,7 +66,7 @@ export class CampaignAdapter implements ICampaignGateway {
 				try {
 					customerData = await searchCustomer(customerCampaignRecord.customerId);					
 				} catch (error) {
-					console.error(`Error fetching customer with ID ${customerCampaignRecord.customerId}:`, error.message);
+					throw new Error("Error fetching customer");
 				}
 
 				// Mapeia os dados para o formato desejado
@@ -94,7 +92,7 @@ export class CampaignAdapter implements ICampaignGateway {
 				try {
 					campaignData = await this.getCampaignById(campaignRecord.campaignId);					
 				} catch (error) {
-					console.error(`Error fetching campaign with ID ${campaignRecord.campaignId}:`, error.message);
+					throw new Error("Error fetching campaign");
 				}
 
 				// Mapeia os dados para o formato desejado

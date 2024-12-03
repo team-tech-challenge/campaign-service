@@ -45,5 +45,8 @@ export class Campaign {
 	public setDiscount(discount: number): void {		
 		this.discount = discount;
 	}
+	public setEndDate(endDate: Date): void {		
+		this.endDate = endDate;
+	}
 	
 }

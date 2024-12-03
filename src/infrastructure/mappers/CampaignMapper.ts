@@ -1,5 +1,4 @@
 import { Campaign } from "@entities/Campaign";
-import { Campaign as CampaignModel } from "@database/CampaignModel";
 
 export class CampaignMapper {
   // Mapeia de CampaignModel (banco) para Campaign (domínio)

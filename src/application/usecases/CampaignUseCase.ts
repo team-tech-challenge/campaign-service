@@ -1,6 +1,5 @@
 import { ICampaignGateway } from "@gateways/ICampaignGateway";
 import { Campaign } from "@entities/Campaign";
-import { CampaignCustomer } from "@entities/CampaignCustomer";
 
 export class CampaignUseCase {
 	constructor(private readonly campaignGateway: ICampaignGateway) { }
@@ -24,7 +23,7 @@ export class CampaignUseCase {
 
 		const customerCampaign = await this.campaignGateway.getCustomersOfCampaign(data.campaignId, data.customerId);
 		
-		if (customerCampaign && customerCampaign.length > 0)	throw new Error('Customer already registered in the campaign.');
+		if (customerCampaign && customerCampaign.length > 0) throw new Error('Customer already registered in the campaign.');
 
 		await this.campaignGateway.newCampaignAssociation(data);
 	}
@@ -39,21 +38,11 @@ export class CampaignUseCase {
 	async getCampaignCustomers(campaignId: number): Promise<{  campaignId: number; customer: any | null }[]> { 
 		
 		const campaignCustomers = await this.campaignGateway.getCustomersOfCampaign(campaignId);
-
-		if (!campaignCustomers) {
-			throw new Error('customer not found');
-		}
-	  
-		return campaignCustomers;
+		return campaignCustomers ? campaignCustomers : null;
 	}
 	async getCustomerCampaigns(customerId: number ): Promise<{  customerId: number; campaign: any | null }[]> { 
 		
 		const customerCampaigns = await this.campaignGateway.getCampaignsOfCustomer(customerId);
-
-		if (!customerCampaigns) {
-			throw new Error('customer not found');
-		}
-	  
-		return customerCampaigns;
+		return customerCampaigns ? customerCampaigns : null;
 	}
 }

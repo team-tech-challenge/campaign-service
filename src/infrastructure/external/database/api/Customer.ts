@@ -24,7 +24,6 @@ const searchCustomer = async (id: number) => {
 
         return response.data;
     } catch (error) {
-        console.error('Error searching Customer in order:', error.response ? error.response.data : error.message);
         throw error;
     }
 };
