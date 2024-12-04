@@ -10,7 +10,7 @@
       "url": "http://localhost:3000"
     }
   ],
-  "paths": {    
+  "paths": {
     "/campaign/all": {
       "get": {
         "tags": [
@@ -138,7 +138,7 @@
         }
       }
     },
-    "/campaign/{id}/customers": {
+    "/campaign/{idCampaign}/customers": {
       "get": {
         "tags": [
           "Campaign"
@@ -146,7 +146,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "id",
+            "name": "idCampaign",
             "in": "path",
             "required": true,
             "schema": {
@@ -160,10 +160,33 @@
           }
         }
       }
-    }    
+    },
+    "/campaign/customer/{idCustomer}": {
+      "get": {
+        "tags": [
+          "Campaign"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "idCustomer",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
   },
   "components": {
-    "schemas": {      
+    "schemas": {
       "Campaign": {
         "type": "object",
         "properties": {
@@ -181,13 +204,13 @@
           },
           "endDate": {
             "type": "string",
-            "example": "2021-10-20"
+            "example": "2025-10-20"
           }
         },
         "xml": {
           "name": "Campaign"
         }
-      },      
+      },
       "AddCampaignCustomer": {
         "type": "object",
         "properties": {
