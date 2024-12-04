@@ -50,7 +50,7 @@ describe('CampaignController', () => {
 		});
 	});
     describe('getCampaignById', () => {
-		it('deve retornar um cliente pelo CPF', async () => {
+		it('deve retornar uma campanha pelo ID', async () => {
 			campaignUseCaseMock.getCampaignById.mockResolvedValue(newCampaign);
 
 			const req = { params: { id: 1 } };
@@ -65,11 +65,11 @@ describe('CampaignController', () => {
 			expect(res.json).toHaveBeenCalledWith(newCampaign);
 		});
 
-		it('deve retornar erro ao buscar cliente por CPF', async () => {
+		it('deve retornar erro ao buscar uma campanha pelo ID', async () => {
 			const error = new Error('Campaign not found');
 			campaignUseCaseMock.getCampaignById.mockRejectedValue(error);
 
-			const req = { params: { cpf: '78542341082' } };
+			const req = { params: { id: 1 } };
 			const res = {
 				status: jest.fn().mockReturnThis(),
 				json: jest.fn(),

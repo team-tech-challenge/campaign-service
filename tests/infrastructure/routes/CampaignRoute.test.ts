@@ -56,67 +56,61 @@ describe('Campaign Routes', () => {
             .set('Accept', 'application/json');
         expect(response.status).toBe(201);
         expect(response.body).toEqual({ id: '1', ...updatedCampaign });
-    });    
+    });       
 
-    // it('GET /campaign/:id/customers - should get customer campaigns', async () => {
-    //     const mockCampaigns = [{ campaignId: 1, customer: { cpf: '78542341082', name: 'John D.', phoneNumber: '987654321', email: 'john.d@email.com' } }];
+    it('GET /campaign/:idCampaign/customers - should get customers for a campaign', async () => {
+        const mockCampaigns = [{ campaignId: 1, customer: { id: 1, cpf: '78542341082', name: 'John D.', phoneNumber: '987654321', email: 'john.d@email.com' } }];
 		
-    //     // Mock para simular o caso de sucesso (201)
-    //     mockedController.prototype.getCustomerCampaigns.mockImplementationOnce(async (req, res) => {
-    //         const { id } = req.params;
-    //         if (parseInt(id, 10) === 1) {
-    //             res.status(201).json(mockCampaigns);
-    //         } else {
-    //             res.status(404).json({ message: 'Customers not found' });
-    //         }
-    //     });
+        mockedController.prototype.getCampaignCustomers.mockImplementation(async (req, res) => {
+            const { idCampaign } = req.params;
+            if (parseInt(idCampaign, 10) === 1) {
+                res.status(201).json(mockCampaigns);
+            } else {
+                res.status(404).json({ message: 'Campaigns not found' });
+            }
+        });
     
-    //     // Caso de sucesso
-    //     const successResponse = await request(app).get('/campaign/1/customers');
-    //     expect(successResponse.status).toBe(201);
-    //     expect(successResponse.body).toEqual(mockCampaigns);
+        // Caso de sucesso
+        const successResponse = await request(app).get('/campaign/1/customers');
+        expect(successResponse.status).toBe(201);
+        expect(successResponse.body).toEqual(mockCampaigns);
     
-    //     // Mock para simular o caso de erro (404)
-    //     mockedController.prototype.getCustomerCampaigns.mockImplementationOnce(async (req, res) => {
-    //         const { id } = req.params;
-    //         res.status(404).json({ message: 'Customers not found' });
-    //     });
+        // Caso de erro
+        const errorResponse = await request(app).get('/campaign/999/customers');
+        expect(errorResponse.status).toBe(404);
+        expect(errorResponse.body).toEqual({ message: 'Campaigns not found' });
+    });
     
-    //     // Caso de erro
-    //     const errorResponse = await request(app).get('/campaign/999/customers'); // ID inexistente
-    //     expect(errorResponse.status).toBe(404);
-    //     expect(errorResponse.body).toEqual({ message: 'Customers not found' });
-    // });
 
-    // it('GET /campaign/customer/:id - should get customer campaigns', async () => {
-    //     const mockCampaigns = [{ customerId: 1, campaign: { name: 'Primeira Campanha' } }];
+    it('GET /campaign/customer/:idCustomer - should get customer campaigns', async () => {
+        const mockCampaigns = [{ customerId: 1, campaign: { name: 'Primeira Campanha' } }];
     
-    //     // Mock para simular o caso de sucesso (201)
-    //     mockedController.prototype.getCustomerCampaigns.mockImplementationOnce(async (req, res) => {
-    //         const { id } = req.params;
-    //         if (parseInt(id, 10) === 1) {
-    //             res.status(201).json(mockCampaigns);
-    //         } else {
-    //             res.status(404).json({ message: 'Campaigns not found' });
-    //         }
-    //     });
+        // Mock para simular o caso de sucesso (201)
+        mockedController.prototype.getCustomerCampaigns.mockImplementation(async (req, res) => {
+            const { idCustomer } = req.params;
+            if (parseInt(idCustomer, 10) === 1) {
+                res.status(201).json(mockCampaigns);
+            } else {
+                res.status(404).json({ message: 'Campaigns not found' });
+            }
+        });
     
-    //     // Caso de sucesso
-    //     const successResponse = await request(app).get('/campaign/customer/1');
-    //     expect(successResponse.status).toBe(201);
-    //     expect(successResponse.body).toEqual(mockCampaigns);
+        // Caso de sucesso
+        const successResponse = await request(app).get('/campaign/customer/1');
+        expect(successResponse.status).toBe(201);
+        expect(successResponse.body).toEqual(mockCampaigns);
     
-    //     // Mock para simular o caso de erro (404)
-    //     mockedController.prototype.getCustomerCampaigns.mockImplementationOnce(async (req, res) => {
-    //         const { id } = req.params;
-    //         res.status(404).json({ message: 'Campaigns not found' });
-    //     });
+        // Mock para simular o caso de erro (404)
+        mockedController.prototype.getCustomerCampaigns.mockImplementation(async (req, res) => {
+            const { id } = req.params;
+            res.status(404).json({ message: 'Campaigns not found' });
+        });
     
-    //     // Caso de erro
-    //     const errorResponse = await request(app).get('/campaign/customer/999'); // ID inexistente
-    //     expect(errorResponse.status).toBe(404);
-    //     expect(errorResponse.body).toEqual({ message: 'Campaigns not found' });
-    // });
+        // Caso de erro
+        const errorResponse = await request(app).get('/campaign/customer/999'); // ID inexistente
+        expect(errorResponse.status).toBe(404);
+        expect(errorResponse.body).toEqual({ message: 'Campaigns not found' });
+    });
 
     it('GET /campaign/:id - should get campaign by ID', async () => {
         const mockCampaign = { id: 1, name: 'Primeira Campanha' };
